@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { Send, UserCircle2, AtSign, Smartphone, Store, MessageCircle, CheckCircle2 } from "lucide-react";
-import { projectId, publicAnonKey } from '../../utils/supabase/info';
+import { getSupabaseClient } from '../../utils/supabase/client';
 
 export function Consultation() {
   const [focusedField, setFocusedField] = useState<string | null>(null);
@@ -31,7 +31,13 @@ export function Consultation() {
     setErrorMessage(null);
 
     try {
-      // Prepara i dati da inviare al server
+      const supabase = getSupabaseClient();
+      
+      if (!supabase) {
+        throw new Error('Connessione al database non disponibile');
+      }
+
+      // Prepara i dati da inserire nella tabella "richieste"
       const dataToInsert = {
         'nome e cognome': formData.nome.trim(),
         'email': formData.email.trim(),
@@ -40,29 +46,15 @@ export function Consultation() {
         'descrizione': formData.messaggio.trim() || null
       };
 
-      console.log('📧 Invio richiesta di consulenza al server:', dataToInsert);
+      // Inserisci direttamente nella tabella "richieste"
+      const { error } = await supabase
+        .from('richieste')
+        .insert([dataToInsert]);
 
-      // Invia i dati al server Edge Function
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-f1bdd54d/richieste`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${publicAnonKey}`
-          },
-          body: JSON.stringify(dataToInsert)
-        }
-      );
-
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        console.error('Errore dal server:', result);
-        throw new Error(result.error || 'Errore durante il salvataggio');
+      if (error) {
+        console.error('Errore Supabase:', error);
+        throw new Error(error.message || 'Errore durante il salvataggio');
       }
-
-      console.log('✅ Richiesta salvata con successo:', result.data);
 
       setIsSuccess(true);
       setFormData({
@@ -74,7 +66,7 @@ export function Consultation() {
       });
       setTimeout(() => setIsSuccess(false), 6000);
     } catch (error) {
-      console.error('❌ Errore durante l\'invio della richiesta:', error);
+      console.error('Errore durante l\'invio della richiesta:', error);
       setErrorMessage(error instanceof Error ? error.message : 'Si è verificato un errore. Riprova più tardi.');
     } finally {
       setIsSubmitting(false);
