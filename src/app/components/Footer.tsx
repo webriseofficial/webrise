@@ -15,10 +15,10 @@ export function Footer() {
           <div className="col-span-1">
             <Link to="/" className="inline-block mb-6 relative group">
               <div className="absolute inset-0 bg-white/10 rounded-full blur-md group-hover:bg-white/20 transition-all duration-300"></div>
-              <img 
-                src={logoImg} 
-                alt="Webrise Logo" 
-                className="relative h-24 w-24 object-contain rounded-full p-2 bg-white shadow-lg border-2 border-transparent group-hover:border-[#4CAF50] transition-all duration-300" 
+              <img
+                src={logoImg}
+                alt="Webrise Logo"
+                className="relative h-24 w-24 object-contain rounded-full p-2 bg-white shadow-lg border-2 border-transparent group-hover:border-[#4CAF50] transition-all duration-300"
               />
             </Link>
             <p className="text-gray-400 leading-relaxed mb-6 max-w-sm">
@@ -28,8 +28,8 @@ export function Footer() {
               <a href="#" className="w-10 h-10 rounded-full bg-gray-800/80 flex items-center justify-center text-gray-400 hover:bg-[#4CAF50] hover:text-white transition-all duration-300 shadow-sm">
                 <Facebook size={20} />
               </a>
-              <a 
-                href="https://www.instagram.com/webrisedesign?igsh=MWJ4eXZweWRnMjMwYg==" 
+              <a
+                href="https://www.instagram.com/webrisedesign?igsh=MWJ4eXZweWRnMjMwYg=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-800/80 flex items-center justify-center text-gray-400 hover:bg-[#4CAF50] hover:text-white transition-all duration-300 shadow-sm"
@@ -87,7 +87,7 @@ export function Footer() {
                   <Phone size={20} className="text-[#4CAF50]" />
                 </div>
                 <a href="tel:+39061234567" className="text-gray-400 hover:text-white transition-colors text-sm font-medium">
-                  +39 06 123 4567
+                  +39 327 711 3584
                 </a>
               </li>
               <li className="flex items-center gap-4 p-4 rounded-xl bg-gray-800/30 border border-gray-700/50 hover:border-[#4CAF50]/50 transition-colors group">
